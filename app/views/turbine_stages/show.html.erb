@@ -1,0 +1,8 @@
+<script type="text/javascript" src="/mathjax/MathJax.js"></script>
+<% content_for :title do %>
+<h1>Stage</h1>
+<% end -%>
+<%= link_to raw("&larr;back"), turbine_stages_path %>|<%= link_to raw("edit"), edit_turbine_stage_path(@tstage) %><br/>
+<%= render :partial => 'tstage' %>
+
+<%#= debug @tstage%> 

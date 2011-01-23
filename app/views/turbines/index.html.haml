@@ -1,0 +1,22 @@
+- content_for :title do 
+	%h1
+		Turbines
+= link_to "new", new_turbine_path
+%table{:border => 1}
+	%tr
+		%td P_vh_t, Pa
+		%td T_vh_t, K
+		%td P_vyh_t, Pa
+		%td T_vyh_t, K
+		%td
+		%td
+		%td
+	-@turbines.each do |ts|
+		%tr
+			%td= ts.p_vh_t.to_i
+			%td= ts.t_vh_t.to_i
+			%td= ts.p_vyh_t.to_i
+			%td= ts.t_vyh_t.to_i 
+			%td= link_to "show", ts
+			%td= link_to "edit", edit_turbine_path(ts)
+			%td= link_to "destroy", ts, :method => :delete, :confirm => "are you sure?"

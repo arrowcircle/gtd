@@ -1,0 +1,50 @@
+- form_for @tstage do |f|
+	%field
+		= f.label "P_vh_t"
+		= f.text_field :p_vh_t
+	%br	
+	%field
+		= f.label "T_vh_t"
+		= f.text_field :t_vh_t
+	%br	
+	%field
+		= f.label "P_vyh_t"
+		= f.text_field :p_vyh_t
+	%br	
+	%field
+		= f.label "T_vyh_t"
+		= f.text_field :t_vyh_t
+	%br
+	%field
+		= f.label "C_vh"
+		= f.text_field :c_vh
+	%br	
+	%field
+		= f.label "H"
+		= f.text_field :h
+	%br
+	%field
+		= f.label "ro"
+		= f.text_field :ro
+	%br
+	%field
+		= f.label "K_c"
+		= f.text_field :kc
+	%br
+	%field
+		= f.label "K_d_c"
+		= f.text_field :kdc
+	%br	
+	%field
+		= f.label "K_rk"
+		= f.text_field :krk
+	%br
+	%field
+		= f.label "R_d_rk"
+		= f.text_field :kdrk
+	%br
+	%field
+		= f.label "alfa1"
+		= f.text_field :alfa1
+	%br
+	= f.submit

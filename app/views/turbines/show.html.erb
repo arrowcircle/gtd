@@ -1,0 +1,36 @@
+<script type="text/javascript" src="/mathjax/MathJax.js"></script>
+<% content_for :title do %>
+<h1>Turbine</h1>
+<% end -%>
+<%= link_to raw("&larr;back"), turbines_path %>|<%= link_to raw("edit"), edit_turbine_path(@turbine) %><br/>
+T_2 = <%= @result.t2.to_i%> K<br/>
+P_2 = <%= @result.p2.to_i%> Pa<br/>
+ro2* = <%= @result.ro2t.round(4)%>kg/m^3<br/>
+ro2 = <%= @result.ro2.round(4)%>kg/m^3<br/>
+A2 = <%= @result.aa2.round(4)%>m^2<br/>
+nmax = <%= @result.nmax.to_i%>Ob/min<br/>
+&pi;<sub>т</sub> = <%= @result.pi_t.round(4)%>
+&pi;<sub>т</sub>* = <%= @result.pi_tt.round(4)%><br/>
+Ht = <%= @result.h.to_i%> Дж/кг<br/>
+Dt = <%= (@result.d*1000).to_i%> мм<br/>
+u_t = <%= (@result.ut).to_i%> м/с<br/>
+l2 = <%= (@result.l2*1000).to_i%> мм<br/>
+c0 = <%= (@result.c0).to_i%> м/с<br/>
+c2usl = <%= (@turbine.c2usl).to_i%> м/с<br/>
+c2sr = <%= (@result.c2sr).to_i%> м/с<br/>
+z = <%= (@result.z).round(1)%> = <%= (@result.z).to_i%><br/>
+Теплоперепады по ступеням:<br/>
+<% @result.hh.each do |a|  %>
+H<%= @result.hh.index(a)+1 %> = <%= a %><br/>
+<% end %>
+Stages = <%= @turbine.turbine_stages.count %>
+<br/>
+<% i = 1 %>
+<% @turbine.turbine_stages.each do |ts| %>
+<h1>Ступень №<%= i %></h1>
+<%= link_to "Ред.", edit_turbine_stage_path(ts) %>
+<%= render :partial => "turbine_stages/tstage", :locals => {:tstage => ts, :result => TstageResult.new(ts, @result)} %>
+<% i = i+1 %>
+<% end %>
+<%= link_to 'Edit', edit_turbine_path(@turbine) %> |
+<%= link_to 'Back', turbines_path %>

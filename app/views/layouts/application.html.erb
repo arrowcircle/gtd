@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gtd</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+<div id="doc" class="yui-t7">
+	<div id="hd">
+		<%= render "shared/navi"%>
+<%= yield(:title)%>
+	
+	</div>
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+			<p>
+			<%= yield %>
+			</p>
+			</div>
+		</div>
+	</div>	
+</div>
+</body>
+</html>

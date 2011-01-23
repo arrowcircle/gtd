@@ -1,0 +1,2 @@
+module TurbinesHelper
+end

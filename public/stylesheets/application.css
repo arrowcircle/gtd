@@ -1,0 +1,57 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}ol,ul {list-style:none;}caption,th {text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;}q:before,q:after{content:'';}
+
+body{text-align:center;}#doc{width:57.69em;*width:56.3em;min-width:750px;margin:auto;text-align:left;}#hd,#bd{margin-bottom:1em;text-align:left;}#ft{font-size:77%;font-family:verdana;clear:both;}.yui-t1 #yui-main .yui-b, .yui-t2 #yui-main .yui-b, .yui-t3 #yui-main .yui-b, .yui-t4 .yui-b, .yui-t5 .yui-b, .yui-t6 .yui-b{float:right;}.yui-t1 .yui-b, .yui-t2 .yui-b, .yui-t3 .yui-b, .yui-t4 #yui-main .yui-b, .yui-t5 #yui-main .yui-b, .yui-t6 #yui-main .yui-b{float:left;}.yui-t1 #yui-main .yui-b{width:76%;min-width:570px;}.yui-t1 .yui-b{width:21.33%;min-width:160px;}.yui-t2 #yui-main .yui-b, .yui-t4 #yui-main .yui-b{width:73.4%;min-width:550px;}.yui-t2 .yui-b, .yui-t4 .yui-b{width:24%;min-width:180px;}.yui-t3 #yui-main .yui-b, .yui-t6 #yui-main .yui-b{width:57.6%;min-width:430px;}.yui-t3 .yui-b, .yui-t6 .yui-b{width:40%;min-width:300px;}.yui-t5 #yui-main .yui-b{width:65.4%;min-width:490px;}.yui-t5 .yui-b{width:32%;min-width:240px;}.yui-g .yui-u, .yui-g .yui-g, .yui-ge .yui-u, .yui-gf .yui-u{float:right;display:inline;}.yui-g .first, .yui-gd .first, .yui-ge .first, .yui-gf .first{float:left;}.yui-g .yui-u, .yui-g .yui-g{width:49.1%;}.yui-g .yui-g .yui-u{width:48.1%;}.yui-gb .yui-u, .yui-gc .yui-u, .yui-gd .yui-u{float:left;margin-left:2%;*margin-left:1.895%;width:32%;}.yui-gb .first, .yui-gc .first, .yui-gd .first{margin-left:0;}.yui-gc .first, .yui-gd .yui-u{width:66%;}.yui-gd .first{width:32%;}.yui-ge .yui-u{width:24%;}.yui-ge .first, .yui-gf .yui-u{width:74.2%;}.yui-gf .first{width:24%;}.yui-ge .first{width:74.2%;}#bd:after, .yui-g:after, .yui-gb:after, .yui-gc:after, .yui-gd:after, .yui-ge:after, .yui-gf:after{content:".";display:block;height:0;clear:both;visibility:hidden;}#bd, .yui-g, .yui-gb, .yui-gc, .yui-gd, .yui-ge, .yui-gf{zoom:1;}
+
+/*** setup ***/
+body { font:12px/1.5 Verdana,sans-serif; background:#092e20; color: white;}
+#bd { background:#487858; }
+#doc { padding-top:16px; }
+
+/*** links ***/
+a img {border: none;}
+a {text-decoration: none;}
+a:hover { color:#ffe761; }
+a:link, a:visited { color:#ffc757; }
+h2 a, h3 a, h4 a { text-decoration:none !important; }
+#bd a:hover { background-color:#E0FFB8; color:#234f32; text-decoration:none; }
+#bd a:link, #bd a:visited { color:#ab5603; }
+
+/*** content ***/
+#chapter-body { position: relative; }
+#yui-main div.yui-b { margin: 0 0 0 20px; background: white; color: black; padding: 0.3em 2em 1em 2em; }
+dd { margin-left:15px; }
+h1 { font-size:218%; margin-top:0.6em; margin-bottom:.4em; line-height:1.1em; }
+h1,h2,h3,h4 { margin-top:1.4em; font-family:"Trebuchet MS",sans-serif; font-weight:normal; }
+h2#chapter-title { font-size: 218%; line-height:1.2em; margin-bottom: 0.8em; }
+h2#chapter-subtitle { font-size: 140%; margin-top:-1.2em !important; margin-bottom:1.6em; margin-left:.2em; color:#487858; }
+h3 { font-size:150%; margin-bottom:.6em; line-height:1.2em; color:#092e20; }
+h4 { font-size:125%; font-weight:bold; margin-bottom:.2em; color:#487858; }
+h5 { font-size:1em; font-weight:bold; margin-top:1.5em; margin-bottom:3px; }
+div.figure { text-align: center; }
+div.figure p.caption { font-size:1em; margin-top:0; margin-bottom:1.5em; color: #555;}
+hr { color:#ccc; background-color:#ccc; height:1px; border:0; }
+p, ul, dl { margin-top:.6em; margin-bottom:1em; padding-bottom: 0.1em;}
+#chapter-body img { max-width: 50em; margin-left: auto; margin-right: auto; display: block; }
+table { color:#000; margin-bottom: 1em; width: 100%; }
+table.docutils td p { margin-top:0; margin-bottom:.5em; }
+table.docutils td, table.docutils th { border-bottom:1px solid #dfdfdf; padding:4px 2px;}
+table.docutils thead th { border-bottom:2px solid #dfdfdf; text-align:left; font-weight: bold; white-space: nowrap; }
+table.docutils thead th p { margin: 0; padding: 0; }
+table.docutils { border-collapse:collapse; }
+caption { font-size:1em; font-weight:bold; margin-top:0.5em; margin-bottom:0.5em; margin-left: 2px; text-align: center; }
+blockquote { padding: 0 1em; margin: 1em 0; font:125%/1.2em "Trebuchet MS", sans-serif; color:#234f32; border-left:2px solid #94da3a; } 
+strong { font-weight: bold; }
+em { font-style: italic; }
+ins { font-weight: bold; text-decoration: none; }
+
+/*** one-off for chapter 7 ***/
+#chapter-body #cn0 strong { font-size:150%; margin-bottom:.6em; line-height:1.2em; color:#092e20; }
+
+/*** forms ***/
+#chapter-body form label { display: block; font-weight: bold; margin-top: 1.5em; margin-bottom: 0;}
+#chapter-body form label span { font-weight: normal; color: #555; }
+#chapter-body form input, #chapter-body form textarea, #chapter-body form select { width: 100%; padding: 1px; }
+#chapter-body form p { margin: 0; }
+#chapter-body form p.submit { text-align: right; }
+#chapter-body form p.submit input { width: 10em; font-size: 1.5em; }
+#chapter-body form p.errors { margin: 0; padding: 0; font-weight: bold; color: red; }

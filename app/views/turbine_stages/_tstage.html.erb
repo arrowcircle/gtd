@@ -1,0 +1,138 @@
+$$A_0 = {G_g \over P_0^* \cdot T} = {<%= tstage.turbine.g_g %> \over <%= tstage.p_vh_t.to_i %>\cdot <%= tstage.t_vh_t.to_i %>} = <%= result.aa_0.round(4)%>{m^2} $$
+
+$$C_0 = \sqrt{2 \cdot H_0} = \sqrt{ 2 \cdot <%= tstage.h.to_i %>} = <%= result.c0.to_i%> {m \over s} $$
+
+$$a_{kr_0} = \sqrt{{2 \cdot k_g  \over k_g + 1} \cdot R_g \cdot T_0^*} = \sqrt{{2 \cdot <%= result.k_g %>  \over <%= result.k_g %> + 1} \cdot 289 \cdot <%= tstage.t_vh_t.to_i %>} = <%= result.a_kr_0.to_i%> {m \over s}$$
+
+$$ \rho_0^* = {P_0^* \over {R_g \cdot T_0^*}} = {<%= tstage.p_vh_t.to_i %> \over {289 \cdot <%= tstage.t_vh_t.to_i %>}}  = <%= result.ro_0_t.round(4)%> {kg \over m^3}$$
+
+$$ l_0 = {A_0 \over {\pi \cdot D_{t0}}} = {<%= result.aa_0.round(4)%> \over {\pi \cdot <%= result.dt.round(4)%>}} = <%= (result.l0*1000).to_i%> mm $$
+
+
+$$ H_c = {H_0 \cdot (1 - \rho)} = {<%= tstage.h.to_i %> \cdot (1 - <%= tstage.ro %>)} = <%= result.h_s.to_i%> {J \over kg}$$
+
+$$C_1 = \sqrt{2 \cdot H_c} = \sqrt{ 2 \cdot <%= result.h_s.to_i %>} = <%= result.c1.to_i%> {m \over s} $$
+$$ T_1 = T_0^* - {\phi^2 \cdot H_c \over C_{pg}} = <%= tstage.t_vh_t.to_i %> - {<%= tstage.phi %>^2 \cdot <%= result.h_s.to_i%> \over <%= result.cp_g.to_i%>} = <%= result.t1.to_i%> K$$
+
+$$a_{1} = \sqrt{ k_g \cdot R_g \cdot T_1} = \sqrt{<%= result.k_g %> \cdot 289 \cdot <%= result.t1.to_i%>} = <%= result.a1.to_i%> {m \over s}$$
+
+$$M_1 = {C_1 \over a_1} = {<%= result.c1.to_i %> \over <%= result.a1.to_i%>} = <%= result.m1.round(4) %> $$
+
+$$ T_{1ad} = T_0^* - {H_c \over C_{pg}} = <%= tstage.t_vh_t.to_i %> - {<%= result.h_s.to_i %> \over <%= result.cp_g %>} = <%= result.t1_ad.to_i %> K$$
+
+$$ P_1 = {P_0^* \cdot \left({T_{1ad} \over T_0^*}\right)^{k_g \over k_g -1}} = {<%= tstage.p_vh_t.to_i %> \cdot \left({<%= result.t1_ad.to_i %> \over <%= tstage.t_vh_t.to_i %>}\right)^{<%= result.k_g %>\over <%= result.k_g %> -1}} = <%= result.p1.to_i%>Pa$$
+
+$$ \rho_1 = {P_1 \over {R_g \cdot T_1}} = {<%= result.p1.to_i %> \over {289 \cdot <%= result.t1.to_i %>}}  = <%= result.ro_1.round(4)%> {kg \over m^3}$$
+
+$$A_1 = {G_g \over \rho_1 \cdot C_1 \sin{\alpha_1}} = {<%= tstage.turbine.g_g %> \over <%= result.ro_1.round(4) %> \cdot <%= result.c1.to_i %> \cdot \sin{<%= tstage.alfa1 %>}} = <%= result.aa_1.round(4)%>{m^2} $$
+
+$$ l_1 = {A_1 \over {\pi \cdot D_{t1}}} = {<%= result.aa_1.round(4)%> \over {\pi \cdot <%= result.dt.round(4)%>}} = <%= (result.l1*1000).to_i%> mm $$
+
+$$ b_{CA} = {l_1 \over k_{CA}} = {<%= (result.l1*1000).to_i%> \over <%= tstage.kc %>} = <%= (result.bc*1000).to_i%> mm $$
+
+$$b_{\delta CA} = b_{CA} \cdot k_{\delta CA} = <%= (result.bc*1000).to_i%> \cdot <%= tstage.kdc %> = <%= (result.bdc*1000).round(1) %> mm $$
+
+$$ b_{PK} = {l_2 \over k_{PK}} = {<%= (result.l2*1000).to_i%> \over <%= tstage.krk %>} = <%= (result.brk*1000).to_i%> mm $$
+$$b_{\delta PK} = b_{PK} \cdot k_{\delta PK} = <%= (result.brk*1000).to_i%> \cdot <%= tstage.kdrk %> = <%= (result.bdrk*1000).round(1) %> mm $$
+$$ l_t = b_{CA} + b_{\delta CA} + b_{PK} +b_{\delta PK} = <%= (result.bc*1000).to_i%> + <%= (result.bdc*1000).round(1) %> + <%= (result.bdrk*1000).round(1) %> + <%= (result.bdrk*1000).round(1) %> = <%= (result.llt*1000).round(1) %> mm$$
+
+$$ \gamma = {2 \cdot \arctan \left({ l_2 - l_0 \over 2 \cdot l_t}\right)} = {2 \cdot \arctan\left({ <%= (result.l2*1000).to_i%> - <%= (result.l0*1000).to_i%> \over 2 \cdot <%= (result.llt*1000).to_i%>}\right)} = <%= (result.gamma.round(1)).to_i%> \deg $$
+
+$$C_{a1} = {G_g \over \rho_1 \cdot A_1} = {<%= tstage.turbine.g_g %> \over <%= result.ro_1.round(4)%> \cdot <%= result.aa_1.round(4)%>} = <%= result.ca_1.to_i%> {m \over s}$$
+
+$$\alpha_1 = \arcsin \left({C_{a1} \over C_1}\right) = \arcsin \left({<%= result.ca_1.to_i%> \over <%= result.c1.to_i%>}\right) = <%= (result.alfa1).to_i%> \deg$$
+
+$$W_1 = \sqrt{C_1^2 + U_t^2 - 2C_1\cdot U_t\cdot\cos{\alpha_1}} = \sqrt{<%= result.c1.to_i %>^2 + <%= result.u_t1.to_i %>^2 - 2\cdot <%= result.c1.to_i %>\cdot<%= result.u_t1.to_i %>\cdot\cos{<%= (result.alfa1).to_i%>}} = <%= result.w1.to_i%> {m \over s}$$
+
+$$\beta_1 = \arctan\left({C_{a1} \over C_1\cdot\cos\alpha_1 - U_t}\right) = \arctan\left({<%= result.ca_1.to_i%> \over <%= result.c1.to_i%>\cdot\cos<%= result.alfa1.to_i %> - <%= result.u_t1.to_i %>}\right) = <%= (result.beta1).to_i%> \deg$$
+
+$$H_{lop} = {H\cdot\rho\cdot {T_1 \over T_{1ad}}} = {<%= tstage.h.to_i %>\cdot<%= tstage.ro %>\cdot {<%= result.t1.to_i %> \over <%= result.t1_ad.to_i %>}} = <%= result.h_l.to_i%> {J \over kg}$$
+
+$$W_2 = {\psi\left( W_1^2 + 2\cdot H_{lop} + U_2^2 - U_1^2\right)} = {<%= tstage.psi %>\left(<%= result.w1.to_i %>^2 + 2\cdot <%= result.h_lop.to_i %> + <%= result.u_t2.to_i %>^2 - <%= result.u_t1.to_i %>^2\right)} = <%= result.w2.to_i%> {m \over s}$$
+
+$$T_2 = T_1 - {W_2^2 - W_1^2 \over 2 \cdot C_{pg}} = <%= result.t1.to_i %> - {<%= result.w2.to_i %>^2 - <%= result.w1.to_i %>^2 \over 2 \cdot <%= result.cp_g %>} = <%= result.t2.to_i%> K$$
+
+$$T_{2ad} = T_{1ad} - {H_{lop} \over C_{pg}} = <%= result.t1_ad.to_i %> - {<%= result.h_lop.to_i %>^2 \over <%= result.cp_g %>} = <%= result.t2_ad.to_i%> K$$
+
+$$ P_2 = {P_1 \cdot \left({T_{2ad} \over T_1}\right)^{k_g \over k_g -1}} = {<%= result.p1.to_i %> \cdot \left({<%= result.t2_ad.to_i %> \over <%= result.t1.to_i %>}\right)^{<%= result.k_g %>\over <%= result.k_g %> -1}} = <%= result.p2.to_i%>Pa$$
+
+$$ \rho_2 = {P_2 \over {R_g \cdot T_2}} = {<%= result.p2.to_i %> \over {289 \cdot <%= result.t2.to_i %>}}  = <%= result.ro_2.round(4)%> {kg \over m^3}$$
+
+$$ l_2 = {2\cdot\tan\gamma\cdot(b_{\delta CA}+b_{\delta PK})+l_1} = {2\cdot\tan <%= result.gamma.to_i %>(<%= (result.bdc*1000).round(1) %>+<%= (result.brk*1000).round(1) %>)+<%= (result.l1*1000).to_i %>} = <%= (result.l2*1000).to_i%> mm $$
+
+$$A_2 = {\pi\cdot D_{t2}\cdot l_2} = \pi\cdot <%= (result.dt2*1000).to_i %>\cdot <%= (result.l2*1000).to_i %> = <%= result.aa_2.round(4)%> m^2$$
+
+$$C_{a2} = {G_g \over \rho_2 \cdot A_2} = {<%= tstage.turbine.g_g %> \over <%= result.ro_2.round(4)%> \cdot <%= result.aa_2.round(4)%>} = <%= result.ca_2.to_i%> {m \over s}$$
+
+$$\beta_2 = \arcsin\left(C_{a2} \over W_2\right) = \arcsin\left(<%= result.ca_2.to_i%> \over <%= result.w2.to_i%>\right) = <%= result.beta2.to_i%> \deg$$
+
+$$C_{u2} = W_2\cdot\cos\beta_2 = <%= result.w2.to_i%>\cdot\cos<%= result.beta2.to_i%> = <%= result.cu_2.to_i%> {m \over s}$$
+
+$$\alpha_2 = arctan\left(C_{a2} \over C_{u2}\right) = arctan\left(<%= result.ca_2.to_i%> \over <%= result.cu_2.to_i%>\right) = <%= (result.alfa2).to_i%>\deg$$
+
+$$C_2 = \sqrt{C_u^2 + C_a^2} = \sqrt{<%= result.cu_2.to_i%>^2 + <%= result.ca_2.to_i%>^2} = <%= result.c2.to_i%> {m \over s}$$
+
+$$T_2^* = T_2 + {C_2^2 \over 2C_{pg}} = <%= result.t2.to_i %> + {<%= result.c2.to_i%> \over 2\cdot<%= result.cp_g.to_i%>} = <%= result.t2_t.to_i%> K$$
+
+$$ P_2^* = {P_2 \cdot \left({T_2^* \over T_2}\right)^{k_g \over k_g -1}} = {<%= tstage.p_vh_t.to_i %> \cdot \left({<%= result.t1_ad.to_i %> \over <%= tstage.t_vh_t.to_i %>}\right)^{<%= result.k_g %>\over <%= result.k_g %> -1}} = <%= result.p1.to_i%>Pa$$
+
+$$C_{u1} = C_1\cdot\cos\alpha_1 = <%= result.c1.to_i %>\cdot\cos<%= result.alfa1.to_i %> = <%= result.cu_1.to_i%> {m \over s}$$
+
+$$L_u = C_{u1}\cdot U_0 + C_{u2}\cdot U_2 = <%= result.cu_1.to_i%>\cdot <%= result.u_t1.to_i%> + <%= result.cu_2.to_i%>\cdot <%= result.u_t2.to_i%> = <%= result.lu.to_i%> {J \over kg}$$
+
+$$\eta_u = {L_u \over H} = {<%= result.lu.to_i%> \over <%= tstage.h.to_i%>} = <%= result.kpd_u.round(4)%>$$
+
+$$h_c = \left(\phi^{-2}-1\right)\cdot\left(C_1^2 \over 2 \right) = \left(<%= tstage.phi %>^{-2}-1\right)\cdot\left(<%= result.c1.to_i %>^2 \over 2 \right) = <%= result.hc.to_i%>{J \over kg}$$
+
+$$\overline{h_c} = {h_c \left(T_{2ad} \over T_1\right)} = {<%= result.hc.to_i%> \left(<%= result.t2_ad.to_i %> \over <%= result.t1.to_i %>\right)} = <%= result.hco.to_i%>{J \over kg}$$
+
+$$\zeta_c = {\overline{h_c} \over H} = {<%= result.hc.to_i%> \over <%= tstage.h.to_i%>} = <%= result.dz_c.round(4)%>$$
+
+$$h_{lop} = \left(\psi^{-2}-1\right)\cdot\left(W_2^2 \over 2 \right) = \left(<%= tstage.psi %>^{-2}-1\right)\cdot\left(<%= result.w2.to_i %>^2 \over 2 \right) = <%= result.h_lop.to_i%>{J \over kg}$$
+
+$$\zeta_{lop} = { h_{lop} \over H} = {<%= result.h_lop.to_i%> \over <%= tstage.h.to_i%>} = <%= result.dz_lop.round(4)%>$$
+
+$$h_{vyh} = {C_2^2 \over 2} = {<%= result.c2.to_i %>^2 \over 2} = <%= result.h_vyh.to_i%> {J \over kg}$$
+
+$$\zeta_{vyh} = { h_{vyh} \over H} = {<%= result.h_vyh.to_i%> \over <%= tstage.h.to_i%>} = <%= result.dz_vyh.round(4)%>$$
+
+$$h_{zaz} = 1.37\left(1+1.68\rho\right)\left(1 + {l_2 \over D_2}\right)L_u\cdot 0.01{l_2 \over l_2}
+ = 1.37\left(1+1.68\cdot<%= tstage.ro %>\right)\left(1 + {<%= (result.l2*1000).to_i %> \over <%= (result.dt2*1000).to_i %>}\right)<%= result.lu.to_i%>\cdot 0.01{<%= (result.l2*1000).to_i %> \over <%= (result.l2*1000).to_i %>} = <%= result.h_zaz.to_i%>{J \over kg}$$
+
+$$\zeta_{zaz} = {h_{zaz} \over H} = {<%= result.h_zaz.to_i%> \over <%= tstage.h.to_i %>} = <%= result.dz_vyh.round(4)%>$$
+
+$$N_{tv} = (1.07\cdot D_{t1}^2 +61(1-\epsilon)D_t\cdot l_1)\left(U_{t1} \over 100\right)^3\rho_1 = (1.07\cdot <%= result.dt1.round(3) %>^2)\left(<%= result.u_t1.to_i %> \over 100\right)^3<%= result.ro_1.round(4) %> = <%= result.n_tv.to_i%>J$$
+
+$$h_{tv} = {N_{tv} \over G_g} = {<%= result.n_tv.to_i%> \over <%= tstage.turbine.g_g %>} = <%= result.h_tv.round(2)%> {J \over kg}$$
+
+$$\zeta_{tv} = {h_{tv} \over H} = {<%= result.h_tv.round(2)%> \over <%= tstage.h.to_i %>} = <%= result.dz_tv.round(4)%>$$
+
+kpd_u' = <%= (1.0 - (result.dz_c + result.dz_lop + result.dz_vyh)).round(4) %><br/>
+kpd_l' = <%= (result.kpd_u + result.dz_vyh).round(4) %><br/>
+
+
+h_tv = <%= result.h_tv.to_i%> Dj/kg<br/>
+dz_tv = <%= result.dz_tv.round(7)%><br/>
+
+L_t = <%= result.lt.to_i%> Dj/kg<br/>
+kpd_t = <%= result.kpd_t.round(4)%><br/>
+kpd_t' = dodelat   ===   <%#= (1.0 - (result.dz_c + result.dz_lop + result.dz_vyh)).round(4) %><br/>
+kpd_l = <%= result.kpd_l.round(4)%><br/>
+kpd_t* = <%= result.kpd_tt.round(4)%><br/>
+<table border="1">
+  <tr>
+	<td>kpd_t</td>
+	<td>kpd_u</td>
+	<td>kpd_tt</td>
+	<td>kpd_l</td>
+	</tr>
+	<tr>
+	<td><%= result.kpd_t.round(4)%></td>
+	<td><%= result.kpd_u.round(4)%></td>
+	<td><%= result.kpd_tt.round(4)%></td>
+	<td><%= result.kpd_l.round(4)%></td>
+	</tr>
+</table>
+
+
+pi_t = <%= tstage.p_vh_t/result.p2%><br/>
