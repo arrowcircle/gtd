@@ -29,6 +29,7 @@ class TurbineStagesController < ApplicationController
   def update
     @tstage = TurbineStage.find(params[:id])
     if @tstage.update_attributes(params[:turbine_stage])
+      @tstage.rebuild_stages
       redirect_to turbine_path(@tstage.turbine)
     else
       render "edit", :notice => "Error updating turbine stage"

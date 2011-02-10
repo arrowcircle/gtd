@@ -6,13 +6,14 @@ gem 'rails', '3.0.3'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
-gem 'latex-renderer', :git => 'git://github.com/minad/latex-renderer.git'
+#gem 'latex-renderer', :git => 'git://github.com/minad/latex-renderer.git'
 # Use unicorn as the web server
 # gem 'unicorn'
-gem "mongoid", "2.0.0.beta.20"
+gem "mongoid", "2.0.0.rc.7"
 gem "bson_ext"
 gem "haml"
 gem "jquery-rails"
+gem 'lazy_high_charts'
 # Deploy with Capistrano
 # gem 'capistrano'
 

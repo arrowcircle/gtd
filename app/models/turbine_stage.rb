@@ -18,5 +18,18 @@ class TurbineStage
   field :kdrk, :type => Float, :default => 0.3
   referenced_in :turbine, :inverse_of => :turbine_stages
   
-  #after_save :rebuild_stages  
+  #after_save :rebuild_stages
+  
+  def rebuild_stages
+    stages = self.turbine.turbine_stages.to_a
+    unless stages.index(self) == stages.count-1
+      tst = stages[stages.index(self)+1]
+      tst.t_vh_t = self.t_vyh_t
+      tst.p_vh_t = self.p_vyh_t
+      tst.save
+      TstageResult.new(tst, TurbineResult.new(self.turbine))
+      tst.rebuild_stages
+    else
+    end
+  end  
 end

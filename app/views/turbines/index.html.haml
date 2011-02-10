@@ -1,3 +1,4 @@
+= javascript_include_tag 'highcharts'
 - content_for :title do 
 	%h1
 		Turbines
@@ -20,3 +21,4 @@
 			%td= link_to "show", ts
 			%td= link_to "edit", edit_turbine_path(ts)
 			%td= link_to "destroy", ts, :method => :delete, :confirm => "are you sure?"
+= high_chart("my_id", @h)
