@@ -4,13 +4,6 @@ class TurbinesController < ApplicationController
   # GET /turbines.xml
   def index
     @turbines = Turbine.all
-    @h = LazyHighCharts::HighChart.new('graph') do |f|
-        f.options[:chart][:defaultSeriesType] = "area"
-        f.options[:legend][:layout] = "horizontal"
-        f.chart(:defaultSeriesType=>"spline")
-        f.series(:name=>'John', :data=>[[0,0], [1,5], [2,9], [3,3], [4,-2]])
-        f.series(:name=>'Jane', :data=> [[0,10], [1,15], [2,19], [3,13], [4,-12]] )
-      end
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @turbines }

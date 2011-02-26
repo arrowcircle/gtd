@@ -1,7 +1,8 @@
 #coding: utf-8
 class Turbine
   include Mongoid::Document
-  references_many :turbine_stages, :dependent => :destroy
+  #references_many :turbine_stages, :dependent => :destroy
+  embeds_many :turbine_stages, :dependent => :destroy
   field :t_vh_t, :type => Float
   field :p_vh_t, :type => Float
   field :p_vyh_t, :type => Float
@@ -17,7 +18,7 @@ class Turbine
   field :alfa, :type => Float, :default => 0.02
   field :y0, :type => Float, :default => 0.6
   field :alpha, :type => Float, :default => 2.0
-  after_save :set_stages
+  #after_save :set_stages
   
   def set_stages
     #self.turbine_stages.each {|ts| ts.destroy}

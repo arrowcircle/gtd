@@ -1,5 +1,7 @@
 Gtd::Application.routes.draw do
-  resources :turbines
+  resources :turbines do
+    resources :turbine_stages
+  end
   match "/latex" => "latex#index", :as => :latex
   resources :turbine_stages
 

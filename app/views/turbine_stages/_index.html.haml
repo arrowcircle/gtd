@@ -1,0 +1,22 @@
+- content_for :title do 
+	%h1
+		Turbine stages
+%table{:border => 1}
+	%tr
+		%td \(P_{vh}^*, Pa\)
+		%td \(T_{vh}^*, K\)
+		%td \(P_{vyh}^*, Pa\)
+		%td \(T_{vh}^*, K\)
+		%td
+		%td
+		%td
+	-@tstages.each do |ts|
+		%tr
+			%td= ts.p_vh_t.to_i
+			%td= ts.t_vh_t.to_i
+			%td= ts.p_vyh_t.to_i
+			%td= ts.t_vyh_t.to_i
+			%td= link_to "show", ts
+			%td= link_to "edit", edit_turbine_turbine_stage_path(@turbine,ts)
+			%td= link_to "destroy", [@turbine, ts], :method => :delete, :confirm => "are you sure?"
+			

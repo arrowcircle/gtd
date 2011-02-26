@@ -1,16 +1,25 @@
 #coding: utf-8
 class TurbineStagesController < ApplicationController
+  before_filter :find_turbine
   def index
-    @tstages = TurbineStage.all
+    @tstages = @turbine.turbine_stages.all
   end
 
   def new
-    @tstage = TurbineStage.new
+    @tstage = @turbine.turbine_stages.build
+    if @turbine.turbine_stages.count > 0 
+      @tstage.p_vh_t = @turbine.turbine_stages[-2].p_vh_t
+      @tstage.t_vh_t = @turbine.turbine_stages[-2].t_vh_t
+    else
+      @tstage.p_vh_t = @turbine.p_vh_t
+      @tstage.t_vh_t = @turbine.t_vh_t
+    end
   end
 
   def create
-    @tstage = TurbineStage.new(params[:turbine_stage])
+    @tstage = @turbine.turbine_stages.build(params[:turbine_stage])
     if @tstage.save
+      @result = TstageResult.new(@tstage)
       redirect_to turbine_path(@tstage.turbine)
     else
       render "new", :notice => "Error creating turbine stage"
@@ -18,17 +27,18 @@ class TurbineStagesController < ApplicationController
   end
 
   def show
-    @tstage = TurbineStage.find(params[:id])
+    @tstage = @turbine.turbine_stages.find(params[:id])
     @result = TstageResult.new(@tstage)
   end
 
   def edit
-    @tstage = TurbineStage.find(params[:id])
+    @tstage = @turbine.turbine_stages.find(params[:id])
   end
 
   def update
-    @tstage = TurbineStage.find(params[:id])
+    @tstage = @turbine.turbine_stages.find(params[:id])
     if @tstage.update_attributes(params[:turbine_stage])
+      @result = TstageResult.new(@tstage)
       @tstage.rebuild_stages
       redirect_to turbine_path(@tstage.turbine)
     else
@@ -39,7 +49,13 @@ class TurbineStagesController < ApplicationController
   def destroy
     @tstage = TurbineStage.find(params[:id])
     @tstage.destroy
-    redirect_to turbine_path(@tstage.turbine), :notice => "turbine stage deleted"
+    redirect_to turbine_path(@turbine), :notice => "turbine stage deleted"
+  end
+  
+  private
+  
+  def find_turbine
+    @turbine = Turbine.find(params[:turbine_id])
   end
 
 end
