@@ -5,7 +5,7 @@ gem 'rails'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3-ruby', :require => 'sqlite3'
+#gem 'sqlite3-ruby', :require => 'sqlite3'
 #gem 'latex-renderer', :git => 'git://github.com/minad/latex-renderer.git'
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -13,6 +13,7 @@ gem "mongoid", ">= 2.0.0.rc.7"
 #gem 'exceptional', '2.0.32'
 #gem 'newrelic_rpm'
 gem "bson_ext"
+gem 'heroku'
 gem "haml"
 gem "jquery-rails"
 #gem 'lazy_high_charts'
