@@ -14,7 +14,7 @@ $$ l_0 = {A_0 \over {\pi \cdot D_{t0}}} = {<%= result.aa_0.round(4)%> \over {\pi
 $$ H_c = {H_0 \cdot (1 - \rho)} = {<%= tstage.h.to_i %> \cdot (1 - <%= tstage.ro %>)} = <%= result.h_s.to_i%> {J \over kg}$$
 
 $$C_1 = \sqrt{2 \cdot H_c} = \sqrt{ 2 \cdot <%= result.h_s.to_i %>} = <%= result.c1.to_i%> {m \over s} $$
-$$ T_1 = T_0^* - {\phi^2 \cdot H_c \over C_{pg}} = <%= tstage.t_vh_t.to_i %> - {<%= tstage.phi %>^2 \cdot <%= result.h_s.to_i%> \over <%= result.cp_g.to_i%>} = <%= result.t1.to_i%> K$$
+$$ T_1 = T_0^* - {\phi^2 \cdot H_c \over C_{pg}} = <%= tstage.t_vh_t.to_i %> - {<%= tstage.phi.round(4) %>^2 \cdot <%= result.h_s.to_i%> \over <%= result.cp_g.to_i%>} = <%= result.t1.to_i%> K$$
 
 $$a_{1} = \sqrt{ k_g \cdot R_g \cdot T_1} = \sqrt{<%= result.k_g %> \cdot 289 \cdot <%= result.t1.to_i%>} = <%= result.a1.to_i%> {m \over s}$$
 
@@ -50,7 +50,7 @@ $$\beta_1 = \arctan\left({C_{a1} \over C_1\cdot\cos\alpha_1 - U_t}\right) = \arc
 
 $$H_{lop} = {H\cdot\rho\cdot {T_1 \over T_{1ad}}} = {<%= tstage.h.to_i %>\cdot<%= tstage.ro %>\cdot {<%= result.t1.to_i %> \over <%= result.t1_ad.to_i %>}} = <%= result.h_l.to_i%> {J \over kg}$$
 
-$$W_2 = {\psi\left( W_1^2 + 2\cdot H_{lop} + U_2^2 - U_1^2\right)} = {<%= tstage.psi %>\left(<%= result.w1.to_i %>^2 + 2\cdot <%= result.h_lop.to_i %> + <%= result.u_t2.to_i %>^2 - <%= result.u_t1.to_i %>^2\right)} = <%= result.w2.to_i%> {m \over s}$$
+$$W_2 = {\psi\left( W_1^2 + 2\cdot H_{lop} + U_2^2 - U_1^2\right)} = {<%= tstage.psi.to_i %>\left(<%= result.w1.to_i %>^2 + 2\cdot <%= result.h_lop.to_i %> + <%= result.u_t2.to_i %>^2 - <%= result.u_t1.to_i %>^2\right)} = <%= result.w2.to_i%> {m \over s}$$
 
 $$T_2 = T_1 - {W_2^2 - W_1^2 \over 2 \cdot C_{pg}} = <%= result.t1.to_i %> - {<%= result.w2.to_i %>^2 - <%= result.w1.to_i %>^2 \over 2 \cdot <%= result.cp_g %>} = <%= result.t2.to_i%> K$$
 
@@ -84,13 +84,13 @@ $$L_u = C_{u1}\cdot U_1 + C_{u2}\cdot U_2 = <%= result.cu_1.to_i%>\cdot <%= resu
 
 $$\eta_u = {L_u \over H} = {<%= result.lu.to_i%> \over <%= tstage.h.to_i%>} = <%= result.kpd_u.round(4)%>$$
 
-$$h_c = \left(\phi^{-2}-1\right)\cdot\left(C_1^2 \over 2 \right) = \left(<%= tstage.phi %>^{-2}-1\right)\cdot\left(<%= result.c1.to_i %>^2 \over 2 \right) = <%= result.hc.to_i%>{J \over kg}$$
+$$h_c = \left(\phi^{-2}-1\right)\cdot\left(C_1^2 \over 2 \right) = \left(<%= tstage.phi.round(4) %>^{-2}-1\right)\cdot\left(<%= result.c1.to_i %>^2 \over 2 \right) = <%= result.hc.to_i%>{J \over kg}$$
 
 $$\overline{h_c} = {h_c \left(T_{2ad} \over T_1\right)} = {<%= result.hc.to_i%> \left(<%= result.t2_ad.to_i %> \over <%= result.t1.to_i %>\right)} = <%= result.hco.to_i%>{J \over kg}$$
 
 $$\zeta_c = {\overline{h_c} \over H} = {<%= result.hc.to_i%> \over <%= tstage.h.to_i%>} = <%= result.dz_c.round(4)%>$$
 
-$$h_{lop} = \left(\psi^{-2}-1\right)\cdot\left(W_2^2 \over 2 \right) = \left(<%= tstage.psi %>^{-2}-1\right)\cdot\left(<%= result.w2.to_i %>^2 \over 2 \right) = <%= result.h_lop.to_i%>{J \over kg}$$
+$$h_{lop} = \left(\psi^{-2}-1\right)\cdot\left(W_2^2 \over 2 \right) = \left(<%= tstage.psi.to_i %>^{-2}-1\right)\cdot\left(<%= result.w2.to_i %>^2 \over 2 \right) = <%= result.h_lop.to_i%>{J \over kg}$$
 
 $$\zeta_{lop} = { h_{lop} \over H} = {<%= result.h_lop.to_i%> \over <%= tstage.h.to_i%>} = <%= result.dz_lop.round(4)%>$$
 
@@ -125,7 +125,7 @@ $$ \eta_t^* = {L_t \over H_t^*} = {L_t \over H_t^*} = <%= result.kpd_tt.round(4)
 
 $$ M_c = {C_1 \over \sqrt{k_g \cdot R_g \cdot T_1}} = {<%= result.c1.to_i %> \over \sqrt{<%= result.k_g.round(4) %> \cdot  289\cdot <%= result.t1.to_i %>}} = <%= result.mc1.round(4) %>$$
 
-$$ K_{na} = {sin{\alpha_0} \over \sin{\alpha_1}} = {sin{90.0} \over \sin{<%= result.alfa1 %>}} = <%= result.k_na.round(3) %>$$
+$$ K_{na} = {sin{\alpha_0} \over \sin{\alpha_1}} = {sin{90.0} \over \sin{<%= result.alfa1.to_i %>}} = <%= result.k_na.round(3) %>$$
 
 $$ \zeta_{c.tr.prof} = <%= result.dz_c_tr_prof.round(4) %>$$
 $$ s_c = <%= (result.s_c*1000).round(1) %> mm $$
@@ -136,11 +136,56 @@ $$ b_c = {b_{na} \over sin{ \nu_{na}}} = {<%= (result.bc*1000).to_i%> \over sin{
 
 $$ C_{na.otn} = 0.12 $$
 
-\( t_{na.opt.otn} = 0.55\cdot\left({180 \over 180 - \alpha_0 - \alpha_1 }\cdot K_{na}\right)^{1 \over 3}\cdot \left(1 - C_{na.otn}\right) = 0.55\cdot\left({180 \over 180 - 90 - <%= result.alfa1 %> }\cdot <%= result.k_na.round(3) %>\right)^{1 \over 3}\cdot \left(1 - <%= result.c_na_otn %>\right) = <%= result.t_na_opt_otn.round(4) %>\) 
+\( t_{na.opt.otn} = 0.55\cdot\left({180 \over 180 - \alpha_0 - \alpha_1 }\cdot K_{na}\right)^{1 \over 3}\cdot \left(1 - C_{na.otn}\right) = 0.55\cdot\left({180 \over 180 - 90 - <%= result.alfa1.to_i %> }\cdot <%= result.k_na.round(3) %>\right)^{1 \over 3}\cdot \left(1 - <%= result.c_na_otn %>\right) = <%= result.t_na_opt_otn.round(4) %>\) 
 
 $$t_{na.opt} = b_c \cdot t_{na.opt.otn} = <%= (result.b_c*1000).to_i %> \cdot <%= result.t_na_opt_otn.round(4) %> = <%= (result.t_na_opt*1000).to_i %> mm$$
 
-$$ \zeta_{na.krom} = 0.3 {s_c \over t_{na.opt} sin{\alpha_1}}$$
+$$ \zeta_{na.krom} = 0.3 {s_c \over t_{na.opt} sin{\alpha_1}} = 0.3 {<%= (result.s_c*1000).round(1) %> \over <%= (result.t_na_opt*1000).to_i %> sin{<%= result.alfa1 %>}} = <%= result.dz_na_krom.round(4) %>$$
+$$ \zeta_{na.vtor} = \zeta_{tr.prof}{t_{na.opt} sin{\alpha1} \over l_1} = <%= result.dz_c_tr_prof %>{<%= (result.t_na_opt*1000).to_i %> sin{<%= result.alfa1 %>} \over <%= (result.l1*1000).to_i %>} = <%= result.dz_na_vtor.round(4) %>$$
+
+$$\zeta_{na.tr.ogr.pov} = \zeta_{na.vtor} = <%= result.dz_na_vtor.round(4) %>$$
+
+$$ \zeta_{na.prof} = \zeta_{tr.prof} + \zeta_{na.krom} = <%= result.dz_c_tr_prof %> + <%= result.dz_na_krom.round(4) %> = <%= (result.dz_c_tr_prof+result.dz_na_krom).round(4) %>$$
+
+$$ \zeta_{na.konc} = \zeta_{na.vtor} + \zeta_{na.tr.ogr.pov} = <%= result.dz_na_vtor.round(4) %> + <%=  result.dz_na_vtor.round(4) %> = <%= (result.dz_na_vtor+result.dz_na_vtor).round(4) %>$$
+
+$$ \zeta_{na} = \zeta_{na.prof} + \zeta_{na.konc} = <%= (result.dz_c_tr_prof+result.dz_na_krom).round(4) %> + <%= (result.dz_na_vtor+result.dz_na_vtor).round(4) %> = <%= (result.dz_na_vtor+result.dz_na_vtor+result.dz_c_tr_prof+result.dz_na_krom).round(4) %>$$
+
+$$ \phi = \sqrt{1-\zeta_{na}^2} = \sqrt{1-<%= (result.dz_na_vtor+result.dz_na_vtor+result.dz_c_tr_prof+result.dz_na_krom).round(4) %>^2} = <%= result.fii.round(4) %>$$
+
+$$ M_l = {W_2 \over \sqrt{k_g \cdot R_g \cdot T_2}} = {<%= result.w2.to_i %> \over \sqrt{<%= result.k_g %> \cdot 289 \cdot <%= result.t2.to_i %>}} = <%= result.m_l.round(4) %> $$
+
+$$ K_{l} = {sin{\beta_1} \over \sin{\beta_2}} = {sin{<%= result.beta1.to_i %>} \over \sin{<%= result.beta2.to_i %>}} = <%= result.k_l.round(3) %>$$
+
+$$ \zeta_{l.tr.prof} = <%= result.dz_l_tr_prof.round(4) %>$$
+$$ s_l = <%= (result.s_l*1000).round(1) %> mm $$
+
+$$ \nu_{l} = <%= result.v_l.round(2) %> $$
+
+$$ b_l = {b_{l} \over sin{ \nu_{l}}} = {<%= (result.b_l*1000).to_i%> \over sin{ <%= result.v_l.round(2) %>}} = <%= (result.b_l*1000).to_i %> mm$$
+
+$$ C_{l.otn} = 0.2 $$
+
+\( t_{l.opt.otn} = 0.55\cdot\left({180 \over 180 - \beta_1 - \beta_1 }\cdot K_{l}\right)^{1 \over 3}\cdot \left(1 - C_{l.otn}\right) = 0.55\cdot\left({180 \over 180 - <%= result.beta1.to_i %> - <%= result.beta2.to_i %> }\cdot <%= result.k_l.round(3) %>\right)^{1 \over 3}\cdot \left(1 - <%= result.c_l_otn %>\right) = <%= result.t_l_opt_otn.round(4) %>\) 
+
+$$t_{l.opt} = b_c \cdot t_{l.opt.otn} = <%= (result.b_l*1000).to_i %> \cdot <%= result.t_l_opt_otn.round(4) %> = <%= (result.t_l_opt*1000).to_i %> mm$$
+
+$$ \zeta_{l.krom} = 0.3 {s_l \over t_{l.opt} sin{\beta_2}} = 0.3 {<%= (result.s_l*1000).round(1) %> \over <%= (result.t_l_opt*1000).to_i %> sin{<%= result.beta2.to_i %>}} = <%= result.dz_l_krom.round(4) %>$$
+$$ \zeta_{l.vtor} = \zeta_{l.tr.prof}{t_{l.opt} sin{\beta_2} \over l_2} = <%= result.dz_l_tr_prof %>{<%= (result.t_l_opt*1000).to_i %> sin{<%= result.beta2.to_i %>} \over <%= (result.l2*1000).to_i %>} = <%= result.dz_l_vtor.round(4) %>$$
+
+$$\zeta_{l.tr.ogr.pov} = \zeta_{l.vtor} = <%= result.dz_l_vtor.round(4) %>$$
+
+$$ \zeta_{l.prof} = \zeta_{l.tr.prof} + \zeta_{l.krom} = <%= result.dz_l_tr_prof %> + <%= result.dz_l_krom.round(4) %> = <%= (result.dz_l_tr_prof+result.dz_l_krom).round(4) %>$$
+
+$$ \zeta_{l.konc} = \zeta_{l.vtor} + \zeta_{l.tr.ogr.pov} = <%= result.dz_l_vtor.round(4) %> + <%=  result.dz_l_vtor.round(4) %> = <%= (result.dz_l_vtor+result.dz_l_vtor).round(4) %>$$
+
+$$ \zeta_{l} = \zeta_{l.prof} + \zeta_{l.konc} = <%= (result.dz_l_tr_prof+result.dz_l_krom).round(4) %> + <%= (result.dz_l_vtor+result.dz_l_vtor).round(4) %> = <%= (result.dz_l_vtor+result.dz_l_vtor+result.dz_l_tr_prof+result.dz_l_krom).round(4) %>$$
+
+$$ \psi = \sqrt{1-\zeta_{l}^2} = \sqrt{1-<%= (result.dz_l_vtor+result.dz_l_vtor+result.dz_l_tr_prof+result.dz_l_krom).round(4) %>^2} = <%= result.psii.round(4) %>$$
+
+
+
+
 <table border="1">
   <tr>
 	<td>\(\eta_t\)</td>

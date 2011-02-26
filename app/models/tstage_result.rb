@@ -2,7 +2,7 @@
 include Math
 class TstageResult
   require 'property'
-  attr_accessor :aa_0, :ro_0_t, :l0, :h_s, :c1, :t1, :a1, :m1, :t1_ad, :p1, :ro_1, :aa_1, :l1, :l2, :bc, :bdc, :brk, :bdrk, :lt, :gamma, :ca_1, :alfa1, :w1, :beta1, :h_l, :w2, :t2, :t2_ad, :p2, :ro_2, :aa_2, :ca_2, :beta2, :cu_2, :alfa2, :cu_1, :c2, :lu, :kpd_u, :hc, :hco, :dz_c, :h_lop, :dz_lop, :h_vyh, :dz_vyh, :c0, :a_kr_0, :t2_t, :p2_t, :h_zaz, :dz_zaz, :n_tv, :h_tv, :dz_tv, :lt, :kpd_t, :kpd_l, :kpd_tt, :h0_t, :k_g, :dt, :cp_g, :llt, :u_t1, :u_t2, :u_t0, :dt1, :dt2, :mc1, :k_na, :dz_c_tr_prof, :s_c, :v_na, :b_c, :c_na_otn, :t_na_opt_otn, :t_na_opt, :dz_na_krom, :dz_na_vtor
+  attr_accessor :aa_0, :ro_0_t, :l0, :h_s, :c1, :t1, :a1, :m1, :t1_ad, :p1, :ro_1, :aa_1, :l1, :l2, :bc, :bdc, :brk, :bdrk, :lt, :gamma, :ca_1, :alfa1, :w1, :beta1, :h_l, :w2, :t2, :t2_ad, :p2, :ro_2, :aa_2, :ca_2, :beta2, :cu_2, :alfa2, :cu_1, :c2, :lu, :kpd_u, :hc, :hco, :dz_c, :h_lop, :dz_lop, :h_vyh, :dz_vyh, :c0, :a_kr_0, :t2_t, :p2_t, :h_zaz, :dz_zaz, :n_tv, :h_tv, :dz_tv, :lt, :kpd_t, :kpd_l, :kpd_tt, :h0_t, :k_g, :dt, :cp_g, :llt, :u_t1, :u_t2, :u_t0, :dt1, :dt2, :mc1, :k_na, :dz_c_tr_prof, :s_c, :v_na, :b_c, :c_na_otn, :t_na_opt_otn, :t_na_opt, :dz_na_krom, :dz_na_vtor, :fii, :psii, :m_l, :k_l, :dz_l_tr_prof, :s_l, :v_l, :b_l, :c_l_otn, :t_l_opt_otn, :t_l_opt, :dz_l_krom, :dz_l_vtor
   def initialize(ts, tr)
     t_0_t = ts.t_vh_t
     p_0_t = ts.p_vh_t
@@ -112,13 +112,36 @@ class TstageResult
       @k_na = sin(PI/2.0)/sin(alfa1*PI/180.0)
       @dz_c_tr_prof = 0.015
       @s_c = 0.0025
-      @v_na = 85.95 - 1.277*(90 - alfa1) +0.0084*(90 - alfa1)*(90 - alfa1)
+      @v_na = 85.95 - 1.277*(ts.alfa0 - alfa1) +0.0084*(ts.alfa0 - alfa1)*(ts.alfa0 - alfa1)
       @b_c = @bc/sin(@v_na*PI/180.0)
       @c_na_otn = 0.12
-      @t_na_opt_otn = (1-@c_na_otn)*0.55*((180*@k_na/(180 - 90 - alfa1)))**(1/3)
+      @t_na_opt_otn = (1-@c_na_otn)*0.55*((180*@k_na/(180 - ts.alfa0 - alfa1)))**(1/3)
       @t_na_opt = @b_c*@t_na_opt_otn
       @dz_na_krom = 0.3*@s_c/(@t_na_opt*sin(alfa1*PI/180.0))
       @dz_na_vtor = @dz_c_tr_prof*@t_na_opt*sin(alfa1*PI/180.0)/@l1
+      dz_na_tr_ogr_pov = @dz_na_vtor
+      dz_na_prof = @dz_na_krom + @dz_c_tr_prof
+      dz_na_konc = @dz_na_vtor + dz_na_tr_ogr_pov
+      dz_na = dz_na_prof + dz_na_konc
+      @fii = sqrt(1-dz_na**2)
+      ts.phi = @fii
+      @m_l = @w2/sqrt(k_g*r_g*@t2)
+      @k_l = sin(beta1*PI/180.0)/sin(beta2*PI/180.0)
+      @dz_l_tr_prof = 0.021
+      @s_l = 0.004
+      @v_l = 85.95 - 1.277*(@beta1 - @beta2) +0.0084*(@beta1 - @beta2)*(@beta1 - @beta2)
+      @b_l = @brk/sin(@v_l*PI/180.0)
+      @c_l_otn = 0.2
+      @t_l_opt_otn = (1-@c_l_otn)*0.55*((180*@k_l/(180 - @beta1 - @beta2)))**(1/3)
+      @t_l_opt = @b_l*@t_l_opt_otn
+      @dz_l_krom = 0.25*@s_c/(@t_na_opt*sin(@beta2*PI/180.0))
+      @dz_l_vtor = @dz_l_tr_prof*@t_l_opt*sin(@beta2*PI/180.0)/@l2
+      dz_l_tr_ogr_pov = @dz_l_vtor
+      dz_l_prof = @dz_l_krom + @dz_l_tr_prof
+      dz_l_konc = @dz_l_vtor + dz_l_tr_ogr_pov
+      dz_l = dz_l_prof + dz_l_konc
+      @psii = sqrt(1-dz_l**2)
+      ts.psi = @psii
       #cp_g = get_sr_cp((@t2_2-ts.t_vh_t)/2.0,ts.alpha)
       #k_g = cp_g/(cp_g - 289)
     #end

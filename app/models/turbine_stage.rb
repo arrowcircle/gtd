@@ -16,6 +16,7 @@ class TurbineStage
   field :kdc, :type => Float, :default => 0.2
   field :krk, :type => Float, :default => 3.0
   field :kdrk, :type => Float, :default => 0.3
+  field :alfa0, :type => Float, :default => 90.0
   #referenced_in :turbine, :inverse_of => :turbine_stages
   embedded_in :turbine
   
