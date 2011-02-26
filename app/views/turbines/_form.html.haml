@@ -1,65 +1,76 @@
 - form_for @turbine do |f|
 	%field
-		= f.label "P_vh_t"
+		= raw "Давление торможения на входе в турбину<br/>"
+		= f.label "P_vh*" 
 		= f.text_field :p_vh_t
 	%br	
 	%field
+		= raw "Температура торможения на входе в турбину<br/>"
 		= f.label "T_vh_t"
 		= f.text_field :t_vh_t
 	%br
 	%field
+		= raw "Механический КПД<br/>"
 		= f.label "KPD_meh"
 		= f.text_field :kpd_meh
 	%br	
 	%field
+		= raw "Давление торможения на выходе из турбины<br/>"
 		= f.label "P_vyh_t"
 		= f.text_field :p_vyh_t
 	%br	
 	%field
+		= raw "Температура торможения на выходе из турбины<br/>"
 		= f.label "T_vyh_t"
 		= f.text_field :t_vyh_t
 	%br
 	%field
-		= f.label "KPD_meh"
-		= f.text_field :kpd_meh
-	%br
-	%field
+		= raw "Расход газа через турбину<br/>"
 		= f.label "G_g"
 		= f.text_field :g_g
 	%br
 	%field
+		= raw "Мощность приводимого компрессора<br/>"
 		= f.label "N_k"
 		= f.text_field :n_k
 	%br
 	%field
+		= raw "Частота вращения<br/>"
 		= f.label "n"
 		= f.text_field :n
 	%br
 	%field
+		= raw "Осевая скорость на выходе из турбины<br/>"
 		= f.label "Cta"
 		= f.text_field :cta
 	%br
 	%field
+		= raw "Условная скорость на выходе из турбины<br/>"
 		= f.label "C2usl"
 		= f.text_field :c2usl
 	%br
 	%field
+		= raw "Отношение длины лопатки к среднему диаметру<br/>"
 		= f.label "x=l/d"
 		= f.text_field :x
 	%br
 	%field
+		= raw "???<br/>"
 		= f.label "mju"
 		= f.text_field :mju
 	%br
 	%field
+		= raw "Коэффициент возврата теплоты<br/>"
 		= f.label "alfa"
 		= f.text_field :alfa
 	%br
 	%field
+		= raw "Отношение U/C_ad<br/>"
 		= f.label "y0"
 		= f.text_field :y0
 	%br
 	%field
+		= raw "Коэффициент полноты сгорания топлива<br/>"
 		= f.label "alpha(по газу)"
 		= f.text_field :alpha
 	%br

@@ -1,3 +1,5 @@
+$$ U_t = <%= result.u_t1.to_i %> {m \over s}$$
+
 $$A_0 = {G_g \over P_0^* \cdot T} = {<%= tstage.turbine.g_g %> \over <%= tstage.p_vh_t.to_i %>\cdot <%= tstage.t_vh_t.to_i %>} = <%= result.aa_0.round(4)%>{m^2} $$
 
 $$C_0 = \sqrt{2 \cdot H_0} = \sqrt{ 2 \cdot <%= tstage.h.to_i %>} = <%= result.c0.to_i%> {m \over s} $$
@@ -78,7 +80,7 @@ $$ P_2^* = {P_2 \cdot \left({T_2^* \over T_2}\right)^{k_g \over k_g -1}} = {<%= 
 
 $$C_{u1} = C_1\cdot\cos\alpha_1 = <%= result.c1.to_i %>\cdot\cos<%= result.alfa1.to_i %> = <%= result.cu_1.to_i%> {m \over s}$$
 
-$$L_u = C_{u1}\cdot U_0 + C_{u2}\cdot U_2 = <%= result.cu_1.to_i%>\cdot <%= result.u_t1.to_i%> + <%= result.cu_2.to_i%>\cdot <%= result.u_t2.to_i%> = <%= result.lu.to_i%> {J \over kg}$$
+$$L_u = C_{u1}\cdot U_1 + C_{u2}\cdot U_2 = <%= result.cu_1.to_i%>\cdot <%= result.u_t1.to_i%> + <%= result.cu_2.to_i%>\cdot <%= result.u_t2.to_i%> = <%= result.lu.to_i%> {J \over kg}$$
 
 $$\eta_u = {L_u \over H} = {<%= result.lu.to_i%> \over <%= tstage.h.to_i%>} = <%= result.kpd_u.round(4)%>$$
 
@@ -107,24 +109,44 @@ $$h_{tv} = {N_{tv} \over G_g} = {<%= result.n_tv.to_i%> \over <%= tstage.turbine
 
 $$\zeta_{tv} = {h_{tv} \over H} = {<%= result.h_tv.round(2)%> \over <%= tstage.h.to_i %>} = <%= result.dz_tv.round(4)%>$$
 
-kpd_u' = <%= (1.0 - (result.dz_c + result.dz_lop + result.dz_vyh)).round(4) %><br/>
-kpd_l' = <%= (result.kpd_u + result.dz_vyh).round(4) %><br/>
+$$ \eta_u^' = 1 - (\zeta_c + \zeta_{lop} + \zeta_{vyh}) = 1 - (<%= result.dz_c.round(4) %> + <%= result.dz_lop.round(4) %> + <%= result.dz_vyh.round(4) %>) = <%= (1.0 - (result.dz_c + result.dz_lop + result.dz_vyh)).round(4) %>$$
+
+$$ \eta_{l}^' = (\eta_u + \zeta_{vyh}) = (<%= result.kpd_u.round(4) %> + <%= result.dz_vyh.round(4) %> ) = <%= (result.kpd_u + result.dz_vyh).round(4) %>$$
 
 
-h_tv = <%= result.h_tv.to_i%> Dj/kg<br/>
-dz_tv = <%= result.dz_tv.round(7)%><br/>
+$$ L_t = L_u - h_{tv} - h_{zaz} = <%= result.lu.to_i %> - <%= result.h_tv.to_i %> - <%= result.h_zaz.to_i %> = <%= result.lt.to_i%> {J \over kg}$$
 
-L_t = <%= result.lt.to_i%> Dj/kg<br/>
-kpd_t = <%= result.kpd_t.round(4)%><br/>
-kpd_t' = dodelat   ===   <%#= (1.0 - (result.dz_c + result.dz_lop + result.dz_vyh)).round(4) %><br/>
-kpd_l = <%= result.kpd_l.round(4)%><br/>
-kpd_t* = <%= result.kpd_tt.round(4)%><br/>
+$$\eta_t = {L_t \over H} = {<%= result.lt.to_i%> \over <%= tstage.h.to_i %>} = <%= result.kpd_t.round(4)%>$$
+$$\eta_t^' = {L_t \over H} = {<%= result.lt.to_i%> \over <%= tstage.h.to_i %>} = <%= result.kpd_t.round(4)%>$$
+
+$$ \eta_l = 1 - \zeta_c - \zeta_{lop} -\zeta_{zaz} - \zeta_{tv} = 1 - <%= result.dz_c.round(4) %> - <%= result.dz_lop.round(4) %> -<%= result.dz_zaz.round(4) %> - <%= result.dz_tv.round(4) %> = <%= result.kpd_l.round(4)%>$$
+
+$$ \eta_t^* = {L_t \over H_t^*} = {L_t \over H_t^*} = <%= result.kpd_tt.round(4)%>$$
+
+$$ M_c = {C_1 \over \sqrt{k_g \cdot R_g \cdot T_1}} = {<%= result.c1.to_i %> \over \sqrt{<%= result.k_g.round(4) %> \cdot  289\cdot <%= result.t1.to_i %>}} = <%= result.mc1.round(4) %>$$
+
+$$ K_{na} = {sin{\alpha_0} \over \sin{\alpha_1}} = {sin{90.0} \over \sin{<%= result.alfa1 %>}} = <%= result.k_na.round(3) %>$$
+
+$$ \zeta_{c.tr.prof} = <%= result.dz_c_tr_prof.round(4) %>$$
+$$ s_c = <%= (result.s_c*1000).round(1) %> mm $$
+
+$$ \nu_{na} = <%= result.v_na.round(2) %> $$
+
+$$ b_c = {b_{na} \over sin{ \nu_{na}}} = {<%= (result.bc*1000).to_i%> \over sin{ <%= result.v_na.round(2) %>}} = <%= (result.b_c*1000).to_i %> mm$$
+
+$$ C_{na.otn} = 0.12 $$
+
+\( t_{na.opt.otn} = 0.55\cdot\left({180 \over 180 - \alpha_0 - \alpha_1 }\cdot K_{na}\right)^{1 \over 3}\cdot \left(1 - C_{na.otn}\right) = 0.55\cdot\left({180 \over 180 - 90 - <%= result.alfa1 %> }\cdot <%= result.k_na.round(3) %>\right)^{1 \over 3}\cdot \left(1 - <%= result.c_na_otn %>\right) = <%= result.t_na_opt_otn.round(4) %>\) 
+
+$$t_{na.opt} = b_c \cdot t_{na.opt.otn} = <%= (result.b_c*1000).to_i %> \cdot <%= result.t_na_opt_otn.round(4) %> = <%= (result.t_na_opt*1000).to_i %> mm$$
+
+$$ \zeta_{na.krom} = 0.3 {s_c \over t_{na.opt} sin{\alpha_1}}$$
 <table border="1">
   <tr>
-	<td>kpd_t</td>
-	<td>kpd_u</td>
-	<td>kpd_tt</td>
-	<td>kpd_l</td>
+	<td>\(\eta_t\)</td>
+	<td>\(\eta_u\)</td>
+	<td>\(\eta_t^*\)</td>
+	<td>\(\eta_l\)</td>
 	</tr>
 	<tr>
 	<td><%= result.kpd_t.round(4)%></td>
