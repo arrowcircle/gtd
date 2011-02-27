@@ -19,7 +19,7 @@ class TurbineStagesController < ApplicationController
   def create
     @tstage = @turbine.turbine_stages.build(params[:turbine_stage])
     if @tstage.save
-      @result = TstageResult.new(@tstage)
+      @result = TstageResult.new(@tstage, @turbine)
       redirect_to turbine_path(@tstage.turbine)
     else
       render "new", :notice => "Error creating turbine stage"
