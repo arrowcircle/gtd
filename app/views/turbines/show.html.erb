@@ -66,9 +66,11 @@ Z = <%= @turbine.turbine_stages.count %>
 	<% @lt += TstageResult.new(ts, @result).lt %>
 	<% @ht += ts.h %>
 <% end %>
+<% unless @turbine.turbine_stages.empty?  %>
 $$ L_t = <%= @lt.to_i %> {J \over kg}$$
 $$ H_t = <%= @ht.to_i %> {J \over kg}$$
 $$ \eta_t = {L_t \over H_t} = {<%= @lt.to_i %> \over <%= @ht.to_i %>} = <%= (@lt/@ht).round(4) %>$$
 $$ N_t = L_t \cdot G_g = <%= @lt.to_i %>\cdot <%= @turbine.g_g %> = <%= (@lt*@turbine.g_g/1000000).round(3) %> MW$$
+<% end %>
 <%= link_to 'Edit', edit_turbine_path(@turbine) %> |
 <%= link_to 'Back', turbines_path %>
