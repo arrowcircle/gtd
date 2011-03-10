@@ -8,17 +8,23 @@ class TstageResult
     p_0_t = ts.p_vh_t
     r_g = 289.0
     g_g = ts.turbine.g_g
-    k_g = 1.317
-    @k_g = k_g
-    cp_g = 1200
+    cp_g = ts.cp
     @cp_g = cp_g
+    k_g = cp_g/(cp_g - 289)
+    @k_g = k_g
     epsi = 1
     c_vh = ts.c_vh
     h = ts.h
     ro = ts.ro
     phi = ts.phi ||= 0.96
     psi = ts.psi ||= 0.954
-    #5.times do
+    5.times do
+      phi = ts.phi ||= 0.96
+      psi = ts.psi ||= 0.954
+      cp_g = ts.cp
+      @cp_g = cp_g
+      k_g = cp_g/(cp_g - 289)
+      @k_g = k_g
       @l2 = 0
       alfa1 = ts.alfa1
       d_t = tr.d
@@ -142,15 +148,17 @@ class TstageResult
       dz_l = dz_l_prof + dz_l_konc
       @psii = sqrt(1-dz_l**2)
       ts.psi = @psii
-      #cp_g = get_sr_cp((@t2_2-ts.t_vh_t)/2.0,ts.alpha)
+      ts.cp = get_sr_cp((@t2_t+ts.t_vh_t)/2.0,ts.turbine.alpha)
       #k_g = cp_g/(cp_g - 289)
-    #end
+    end
     #@cp_g = cp_g
     #@k_g = k_g
     ts.p_vyh_t = @p2_t
     ts.t_vyh_t = @t2_t
     ts.save
   end
+  
+  private
   def get_sr_cp(t,alfa)
     if t < 700
       cp = (((2.25+1.2*alfa)/(alfa*100000))*(t-70)+0.236)*4187

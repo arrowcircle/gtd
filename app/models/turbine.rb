@@ -3,6 +3,7 @@ class Turbine
   include Mongoid::Document
   #references_many :turbine_stages, :dependent => :destroy
   embeds_many :turbine_stages, :dependent => :destroy
+  field :name, :type => String
   field :t_vh_t, :type => Float
   field :p_vh_t, :type => Float
   field :p_vyh_t, :type => Float
@@ -13,7 +14,7 @@ class Turbine
   field :n, :type => Integer
   field :cta, :type => Integer
   field :c2usl, :type => Integer
-  field :x, :type => Float, :default => 5.0
+  field :x, :type => Float, :default => 0.2
   field :mju, :type => Float, :default => 0.95
   field :alfa, :type => Float, :default => 0.02
   field :y0, :type => Float, :default => 0.6

@@ -1,5 +1,9 @@
 - form_for @turbine do |f|
 	%field
+		= f.label "Название" 
+		= f.text_field :name
+	%br
+	%field
 		= raw "Давление торможения на входе в турбину<br/>"
 		= f.label "P_vh*" 
 		= f.text_field :p_vh_t

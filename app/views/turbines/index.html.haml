@@ -1,23 +1,23 @@
 = javascript_include_tag 'highcharts'
 - content_for :title do 
 	%h1
-		Turbines
-= link_to "new", new_turbine_path
+		Турбины
+= link_to "Добавить", new_turbine_path
 %table{:border => 1}
 	%tr
-		%td P_vh_t, Pa
-		%td T_vh_t, K
-		%td P_vyh_t, Pa
-		%td T_vyh_t, K
-		%td
+		%td Название
+		%td \(P_{vh}^*, Pa\)
+		%td \(T_{vh}^*, K\)
+		%td \(P_{vyh}^*, Pa\)
+		%td \(T_{vyh}^*, K\)
 		%td
 		%td
 	-@turbines.each do |ts|
 		%tr
+			%td= link_to ts.name, ts
 			%td= ts.p_vh_t.to_i
 			%td= ts.t_vh_t.to_i
 			%td= ts.p_vyh_t.to_i
 			%td= ts.t_vyh_t.to_i 
-			%td= link_to "show", ts
-			%td= link_to "edit", edit_turbine_path(ts)
-			%td= link_to "destroy", ts, :method => :delete, :confirm => "are you sure?" 
+			%td= link_to "Ред.", edit_turbine_path(ts)
+			%td= link_to "Удалить", ts, :method => :delete, :confirm => "are you sure?" 
