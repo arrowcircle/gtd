@@ -18,6 +18,18 @@ class TstageResult
     ro = ts.ro
     phi = ts.phi ||= 0.96
     psi = ts.psi ||= 0.954
+    
+    stages = ts.turbine.turbine_stages.order(:t_vh_t.desc).to_a
+    if stages.index(ts) == 0
+      @dt = tr.d
+    else
+      @dt = stages[stages.index(ts)-1].dt2
+    end
+    ts.dt = @dt
+    ts.dt2 = tr.d
+    #ts.dt2 = ts.dt1
+    @dt1 = ts.dt
+    @dt2 = ts.dt2
     5.times do
       phi = ts.phi ||= 0.96
       psi = ts.psi ||= 0.954
@@ -28,13 +40,13 @@ class TstageResult
       @l2 = 0
       alfa1 = ts.alfa1
       d_t = tr.d
-      @dt1 = d_t
-      @dt2 = d_t
-      @dt = d_t
+      #@dt = d_t
       u_t = tr.ut
-      @u_t1 = u_t
+      #@u_t1 = u_t
+      @u_t1 = ts.turbine.n*@dt1*PI/(2.0*30)
       @u_t0 = u_t
-      @u_t2 = u_t
+      #@u_t2 = u_t
+      @u_t2 = ts.turbine.n*@dt2*PI/(2.0*30)
       @c0 = sqrt(2*h)
       @a_kr_0 = sqrt((2*k_g*r_g*t_0_t)/(k_g+1))
       @ro_0_t = p_0_t/(r_g*t_0_t)
@@ -61,6 +73,10 @@ class TstageResult
       @bdc = @bc*kdc
       @bdrk = @brk*kdrk
       @llt = @bc+@brk+@bdc+@bdrk
+      @dt1 = @dt + 2*(@bc+@bdc)*tan(ts.alfad*PI/180.0)
+      @dt2 = @dt + 2*(@llt)*tan(ts.alfad*PI/180.0)
+      @u_t1 = ts.turbine.n*@dt1*PI/(2.0*30)
+      @u_t2 = ts.turbine.n*@dt2*PI/(2.0*30)
       @gamma = 2*atan((@l2-@l0)/(2*@llt))
       @gamma = @gamma*180.0/PI
       @l0 = -2*tan(@gamma*PI/360.0)*@bc + @l1
@@ -153,6 +169,7 @@ class TstageResult
     end
     #@cp_g = cp_g
     #@k_g = k_g
+    ts.dt2 = @dt2
     ts.p_vyh_t = @p2_t
     ts.t_vyh_t = @t2_t
     ts.save

@@ -2,7 +2,7 @@
 class Turbine
   include Mongoid::Document
   #references_many :turbine_stages, :dependent => :destroy
-  embeds_many :turbine_stages, :dependent => :destroy
+  embeds_many :turbine_stages, :dependent => :destroy, :order => :p_vh_t.desc
   field :name, :type => String
   field :t_vh_t, :type => Float
   field :p_vh_t, :type => Float

@@ -1,7 +1,12 @@
 $$ C_{p.г} = <%= tstage.cp.to_i %> {Дж \over кг \cdot К}$$
 $$ k_г = <%= result.k_g.round(3) %>$$
 
-$$ U_t = <%= result.u_t1.to_i %> {м \over с}$$
+$$ D_{t} = <%= (result.dt*1000).to_i %> {мм}$$
+$$ D_{t1} = <%= (result.dt1*1000).to_i %> {мм}$$
+$$ D_{t2} = <%= (result.dt2*1000).to_i %> {мм}$$
+
+$$ U_{t1} = <%= result.u_t1.to_i %> {м \over с}$$
+$$ U_{t2} = <%= result.u_t2.to_i %> {м \over с}$$
 
 $$A_0 = {G_g \over P_0^* \cdot T} = {<%= tstage.turbine.g_g %> \over <%= tstage.p_vh_t.to_i %>\cdot <%= tstage.t_vh_t.to_i %>} = <%= result.aa_0.round(4)%>{м^2} $$
 
@@ -124,7 +129,7 @@ $$\eta_т^' = {L_т \over H} = {<%= result.lt.to_i%> \over <%= tstage.h.to_i %>}
 
 $$ \eta_l = 1 - \zeta_c - \zeta_{лоп} -\zeta_{заз} - \zeta_{тв} = 1 - <%= result.dz_c.round(4) %> - <%= result.dz_lop.round(4) %> -<%= result.dz_zaz.round(4) %> - <%= result.dz_tv.round(4) %> = <%= result.kpd_l.round(4)%>$$
 
-$$ \eta_т^* = {L_т \over H_т^*} = {L_t \over H_t^*} = <%= result.kpd_tt.round(4)%>$$
+$$ \eta_т^* = {L_т \over H_т^*} = {<%= result.lt.to_i%> \over <%= result.h0_t.to_i%>} = <%= result.kpd_tt.round(4)%>$$
 
 $$ M_c = {C_1 \over \sqrt{k_г \cdot R_г \cdot T_1}} = {<%= result.c1.to_i %> \over \sqrt{<%= result.k_g.round(4) %> \cdot  289\cdot <%= result.t1.to_i %>}} = <%= result.mc1.round(4) %>$$
 

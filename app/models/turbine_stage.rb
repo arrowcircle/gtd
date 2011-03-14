@@ -5,7 +5,7 @@ class TurbineStage
   field :p_vh_t, :type => Float
   field :t_vyh_t, :type => Float
   field :p_vyh_t, :type => Float
-  field :c_vh, :type => Float
+  field :c_vh, :type => Float, :default => 150.0
   field :h, :type => Float
   field :ro, :type => Float, :default => 0.3
   field :phi, :type => Float, :default => 0.97
@@ -17,7 +17,10 @@ class TurbineStage
   field :krk, :type => Float, :default => 3.0
   field :kdrk, :type => Float, :default => 0.3
   field :alfa0, :type => Float, :default => 90.0
+  field :alfad, :type => Float, :default => 0.0
   field :cp, :type => Float, :default => 1200.0
+  field :dt, :type => Float
+  field :dt2, :type => Float
   #referenced_in :turbine, :inverse_of => :turbine_stages
   embedded_in :turbine
   

@@ -7,9 +7,9 @@ class TurbineStagesController < ApplicationController
 
   def new
     @tstage = @turbine.turbine_stages.build
-    if @turbine.turbine_stages.count > 0 
-      @tstage.p_vh_t = @turbine.turbine_stages[-2].p_vh_t
-      @tstage.t_vh_t = @turbine.turbine_stages[-2].t_vh_t
+    if @turbine.turbine_stages.to_a.count > 1
+      @tstage.p_vh_t = @turbine.turbine_stages.to_a[-2].p_vyh_t
+      @tstage.t_vh_t = @turbine.turbine_stages.to_a[-2].t_vyh_t
     else
       @tstage.p_vh_t = @turbine.p_vh_t
       @tstage.t_vh_t = @turbine.t_vh_t
@@ -47,7 +47,7 @@ class TurbineStagesController < ApplicationController
   end
 
   def destroy
-    @tstage = TurbineStage.find(params[:id])
+    @tstage = @turbine.turbine_stages.find(params[:id])
     @tstage.destroy
     redirect_to turbine_path(@turbine), :notice => "turbine stage deleted"
   end

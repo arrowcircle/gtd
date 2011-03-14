@@ -54,7 +54,7 @@ Z = <%= @turbine.turbine_stages.count %>
 <%= render "turbine_stages/index" %>
 <%= link_to "Добавить ступень", new_turbine_turbine_stage_path(@turbine) %>
 <% i = 1 %>
-<% @turbine.turbine_stages.each do |ts| %>
+<% @turbine.turbine_stages.order(:t_vh_t.desc).each do |ts| %>
 <h1>Ступень №<%= i %></h1>
 <%= link_to "Ред.", edit_turbine_turbine_stage_path(@turbine, ts) %> | <%= link_to "Удалить", turbine_turbine_stage_path(@turbine, ts), :method => :delete, :confirm => "Точно удалить?" %> 
 <%= render :partial => "turbine_stages/tstage", :locals => {:tstage => ts, :result => TstageResult.new(ts, @result)} %>
@@ -62,7 +62,7 @@ Z = <%= @turbine.turbine_stages.count %>
 <% end %>
 <% @lt = 0  %>
 <% @ht = 0  %>
-<% @turbine.turbine_stages.each do |ts| %>
+<% @turbine.turbine_stages.order(:t_vh_t.desc).each do |ts| %>
 	<% @lt += TstageResult.new(ts, @result).lt %>
 	<% @ht += ts.h %>
 <% end %>
