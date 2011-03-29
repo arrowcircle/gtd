@@ -10,6 +10,7 @@ gem 'rails'
 # Use unicorn as the web server
 # gem 'unicorn'
 gem "mongoid", ">= 2.0.0.rc.7"
+#gem "free_relic", :git => "git://github.com/devmen/FreeRelic.git"
 #gem 'exceptional', '2.0.32'
 #gem 'newrelic_rpm'
 gem "bson_ext"

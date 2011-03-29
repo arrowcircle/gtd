@@ -8,7 +8,7 @@ $$ D_{t2} = <%= (result.dt2*1000).to_i %> {мм}$$
 $$ U_{t1} = <%= result.u_t1.to_i %> {м \over с}$$
 $$ U_{t2} = <%= result.u_t2.to_i %> {м \over с}$$
 
-$$A_0 = {G_g \over P_0^* \cdot T} = {<%= tstage.turbine.g_g %> \over <%= tstage.p_vh_t.to_i %>\cdot <%= tstage.t_vh_t.to_i %>} = <%= result.aa_0.round(4)%>{м^2} $$
+$$A_0 = {G_g \cdot R \cdot T \over P_0^* \cdot C_a} = {<%= tstage.turbine.g_g %> \cdot 289 \cdot <%= tstage.t_vh_t.to_i %> \over <%= tstage.p_vh_t.to_i %>\cdot <%= tstage.c_vh %>} = <%= result.aa_0.round(4)%>{м^2} $$
 
 $$C_0 = \sqrt{2 \cdot H_0} = \sqrt{ 2 \cdot <%= tstage.h.to_i %>} = <%= result.c0.to_i%> {м \over с} $$
 
@@ -84,7 +84,7 @@ $$C_2 = \sqrt{C_u^2 + C_a^2} = \sqrt{<%= result.cu_2.to_i%>^2 + <%= result.ca_2.
 
 $$T_2^* = T_2 + {C_2^2 \over 2C_{p.г}} = <%= result.t2.to_i %> + {<%= result.c2.to_i%> \over 2\cdot<%= result.cp_g.to_i%>} = <%= result.t2_t.to_i%> K$$
 
-$$ P_2^* = {P_2 \cdot \left({T_2^* \over T_2}\right)^{k_г \over k_г -1}} = {<%= tstage.p_vh_t.to_i %> \cdot \left({<%= result.t1_ad.to_i %> \over <%= tstage.t_vh_t.to_i %>}\right)^{<%= result.k_g.round(3) %>\over <%= result.k_g.round(3) %> -1}} = <%= result.p1.to_i%>Па$$
+$$ P_2^* = {P_2 \cdot \left({T_2^* \over T_2}\right)^{k_г \over k_г -1}} = {<%= result.p2.to_i %> \cdot \left({<%= result.t2_t.to_i %> \over <%= result.t2.to_i %>}\right)^{<%= result.k_g.round(3) %>\over <%= result.k_g.round(3) %> -1}} = <%= result.p2_t.to_i%>Па$$
 
 $$C_{u1} = C_1\cdot\cos\alpha_1 = <%= result.c1.to_i %>\cdot\cos<%= result.alfa1.to_i %> = <%= result.cu_1.to_i%> {м \over с}$$
 
@@ -142,24 +142,25 @@ $$ \nu_{НА} = <%= result.v_na.round(2) %> $$
 
 $$ b_c = {b_{НА} \over sin{ \nu_{НА}}} = {<%= (result.bc*1000).to_i%> \over sin{ <%= result.v_na.round(2) %>}} = <%= (result.b_c*1000).to_i %> мм$$
 
-$$ \overline{C_{НА}} = 0.12 $$
+$$ \overline{C_{НА}} = 0.2 $$
 
-\( \overline{t_{НА.опт}} = 0.55\cdot\left({180 \over 180 - \alpha_0 - \alpha_1 }\cdot K_{НА}\right)^{1 \over 3}\cdot \left(1 - \overline{C_{НА}}\right) = 0.55\cdot\left({180 \over 180 - 90 - <%= result.alfa1.to_i %> }\cdot <%= result.k_na.round(3) %>\right)^{1 \over 3}\cdot \left(1 - <%= result.c_na_otn %>\right) = <%= result.t_na_opt_otn.round(4) %>\) 
+\( \overline{t_{НА.опт}} = 0.45\cdot\left({180 \over 180 - \alpha_0 - \alpha_1 }\cdot K_{НА}\right)^{1 \over 3}\cdot \left(1 - \overline{C_{НА}}\right) = 0.55\cdot\left({180 \over 180 - 90 - <%= result.alfa1.to_i %> }\cdot <%= result.k_na.round(3) %>\right)^{1 \over 3}\cdot \left(1 - <%= result.c_na_otn %>\right) = <%= result.t_na_opt_otn.round(4) %>\) 
 
 $$t_{НА.опт} = b_c \cdot \overline{t_{НА.опт}} = <%= (result.b_c*1000).to_i %> \cdot <%= result.t_na_opt_otn.round(4) %> = <%= (result.t_na_opt*1000).to_i %> мм$$
 
-$$ \zeta_{НА.кром} = 0.3 {s_c \over t_{НА.опт} sin{\alpha_1}} = 0.3 {<%= (result.s_c*1000).round(1) %> \over <%= (result.t_na_opt*1000).to_i %> sin{<%= result.alfa1.to_i %>}} = <%= result.dz_na_krom.round(4) %>$$
-$$ \zeta_{НА.втор} = \zeta_{НА.тр.проф}{t_{НА.опт} sin{\alpha1} \over l_1} = <%= result.dz_c_tr_prof %>{<%= (result.t_na_opt*1000).to_i %> sin{<%= result.alfa1.to_i %>} \over <%= (result.l1*1000).to_i %>} = <%= result.dz_na_vtor.round(4) %>$$
-
-$$\zeta_{НА.тр.огр.пов} = \zeta_{НА.втор} = <%= result.dz_na_vtor.round(4) %>$$
+$$ \zeta_{НА.кром} = 0.2 {s_c \over t_{НА.опт} sin{\alpha_1}} = 0.2 {<%= (result.s_c*1000).round(1) %> \over <%= (result.t_na_opt*1000).to_i %> sin{<%= result.alfa1.to_i %>}} = <%= result.dz_na_krom.round(4) %>$$
 
 $$ \zeta_{НА.проф} = \zeta_{НА.тр.проф} + \zeta_{НА.кром} = <%= result.dz_c_tr_prof %> + <%= result.dz_na_krom.round(4) %> = <%= (result.dz_c_tr_prof+result.dz_na_krom).round(4) %>$$
+
+$$ \zeta_{НА.втор} = \zeta_{НА.проф}{t_{НА.опт} sin{\alpha1} \over l_1} = <%= (result.dz_c_tr_prof+result.dz_na_krom).round(4) %>{<%= (result.t_na_opt*1000).to_i %> sin{<%= result.alfa1.to_i %>} \over <%= (result.l1*1000).to_i %>} = <%= result.dz_na_vtor.round(4) %>$$
+
+$$\zeta_{НА.тр.огр.пов} = \zeta_{НА.втор} = <%= result.dz_na_vtor.round(4) %>$$
 
 $$ \zeta_{НА.конц} = \zeta_{НА.втор} + \zeta_{НА.тр.огр.пов} = <%= result.dz_na_vtor.round(4) %> + <%=  result.dz_na_vtor.round(4) %> = <%= (result.dz_na_vtor+result.dz_na_vtor).round(4) %>$$
 
 $$ \zeta_{НА} = \zeta_{НА.проф} + \zeta_{na.konc} = <%= (result.dz_c_tr_prof+result.dz_na_krom).round(4) %> + <%= (result.dz_na_vtor+result.dz_na_vtor).round(4) %> = <%= (result.dz_na_vtor+result.dz_na_vtor+result.dz_c_tr_prof+result.dz_na_krom).round(4) %>$$
 
-$$ \phi = \sqrt{1-\zeta_{НА}^2} = \sqrt{1-<%= (result.dz_na_vtor+result.dz_na_vtor+result.dz_c_tr_prof+result.dz_na_krom).round(4) %>^2} = <%= result.fii.round(4) %>$$
+$$ \phi = \sqrt{1-\zeta_{НА}} = \sqrt{1-<%= (result.dz_na_vtor+result.dz_na_vtor+result.dz_c_tr_prof+result.dz_na_krom).round(4) %>} = <%= result.fii.round(4) %>$$
 
 $$ M_l = {W_2 \over \sqrt{k_г \cdot R_г \cdot T_2}} = {<%= result.w2.to_i %> \over \sqrt{<%= result.k_g.round(3) %> \cdot 289 \cdot <%= result.t2.to_i %>}} = <%= result.m_l.round(4) %> $$
 
@@ -178,18 +179,21 @@ $$ \overline{C_{РК}} = 0.2 $$
 
 $$t_{РК.опт} = b_c \cdot \overline{t_{РК.опт}} = <%= (result.b_l*1000).to_i %> \cdot <%= result.t_l_opt_otn.round(4) %> = <%= (result.t_l_opt*1000).to_i %> мм$$
 
-$$ \zeta_{РК.кром} = 0.3 {s_l \over t_{РК.опт} sin{\beta_2}} = 0.3 {<%= (result.s_l*1000).round(1) %> \over <%= (result.t_l_opt*1000).to_i %> sin{<%= result.beta2.to_i %>}} = <%= result.dz_l_krom.round(4) %>$$
-$$ \zeta_{РК.втор} = \zeta_{ РК.тр.проф}{t_{РК.опт} sin{\beta_2} \over l_2} = <%= result.dz_l_tr_prof %>{<%= (result.t_l_opt*1000).to_i %> sin{<%= result.beta2.to_i %>} \over <%= (result.l2*1000).to_i %>} = <%= result.dz_l_vtor.round(4) %>$$
+$$ \zeta_{РК.кром} = 0.2 {s_l \over t_{РК.опт} sin{\beta_2}} = 0.2 {<%= (result.s_l*1000).round(1) %> \over <%= (result.t_l_opt*1000).to_i %> sin{<%= result.beta2.to_i %>}} = <%= result.dz_l_krom.round(4) %>$$
+
+$$ \zeta_{РК.проф} = \zeta_{РК.тр.проф} + \zeta_{РК.кром} = <%= result.dz_l_tr_prof %> + <%= result.dz_l_krom.round(4) %> = <%= (result.dz_l_tr_prof+result.dz_l_krom).round(4) %>$$
+
+$$ \zeta_{РК.втор} = \zeta_{РК.проф}{t_{РК.опт} sin{\beta_2} \over l_2} = <%= (result.dz_l_tr_prof+result.dz_l_krom).round(4) %>{<%= (result.t_l_opt*1000).to_i %> sin{<%= result.beta2.to_i %>} \over <%= (result.l2*1000).to_i %>} = <%= result.dz_l_vtor.round(4) %>$$
 
 $$\zeta_{РК.тр.огр.пов} = \zeta_{РК.втор} = <%= result.dz_l_vtor.round(4) %>$$
 
-$$ \zeta_{РК.проф} = \zeta_{ РК.тр.проф} + \zeta_{РК.кром} = <%= result.dz_l_tr_prof %> + <%= result.dz_l_krom.round(4) %> = <%= (result.dz_l_tr_prof+result.dz_l_krom).round(4) %>$$
+
 
 $$ \zeta_{РК.конц} = \zeta_{РК.втор} + \zeta_{РК.тр.огр.пов} = <%= result.dz_l_vtor.round(4) %> + <%=  result.dz_l_vtor.round(4) %> = <%= (result.dz_l_vtor+result.dz_l_vtor).round(4) %>$$
 
 $$ \zeta_{РК} = \zeta_{РК.проф} + \zeta_{РК.конц} = <%= (result.dz_l_tr_prof+result.dz_l_krom).round(4) %> + <%= (result.dz_l_vtor+result.dz_l_vtor).round(4) %> = <%= (result.dz_l_vtor+result.dz_l_vtor+result.dz_l_tr_prof+result.dz_l_krom).round(4) %>$$
 
-$$ \psi = \sqrt{1-\zeta_{РК}^2} = \sqrt{1-<%= (result.dz_l_vtor+result.dz_l_vtor+result.dz_l_tr_prof+result.dz_l_krom).round(4) %>^2} = <%= result.psii.round(4) %>$$
+$$ \psi = \sqrt{1-\zeta_{РК}} = \sqrt{1-<%= (result.dz_l_vtor+result.dz_l_vtor+result.dz_l_tr_prof+result.dz_l_krom).round(4) %>} = <%= result.psii.round(4) %>$$
 
 
 

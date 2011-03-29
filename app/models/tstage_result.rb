@@ -10,7 +10,7 @@ class TstageResult
     g_g = ts.turbine.g_g
     cp_g = ts.cp
     @cp_g = cp_g
-    k_g = cp_g/(cp_g - 289)
+    k_g = cp_g/(cp_g - r_g)
     @k_g = k_g
     epsi = 1
     c_vh = ts.c_vh
@@ -51,7 +51,7 @@ class TstageResult
       @a_kr_0 = sqrt((2*k_g*r_g*t_0_t)/(k_g+1))
       @ro_0_t = p_0_t/(r_g*t_0_t)
     # площадь на входе
-      @aa_0 = g_g/(@ro_0_t*c_vh)
+      @aa_0 = g_g*289*t_0_t/(p_0_t*c_vh)
       @l0 = @aa_0/(Math::PI*d_t)
       @h_s = h*(1-ro)
       @c1 = phi*sqrt(2*@h_s)
@@ -62,7 +62,7 @@ class TstageResult
       @p1 = p_0_t*((@t1_ad/t_0_t)**(k_g/(k_g-1)))
       @ro_1 = @p1/(r_g*@t1)
       @aa_1 = g_g/(@ro_1*@c1*sin(alfa1*PI/180.0))
-      @l1 = @aa_1/(PI*d_t)
+      @l1 = @aa_1/(PI*@dt1)
       @l2 = 2.0*@l1 -@l0 if @l2 == 0
       kc = ts.kc
       kdc = ts.kdc
@@ -134,35 +134,41 @@ class TstageResult
       @k_na = sin(PI/2.0)/sin(alfa1*PI/180.0)
       @dz_c_tr_prof = 0.015
       @s_c = 0.0025
-      @v_na = 85.95 - 1.277*(ts.alfa0 - alfa1) +0.0084*(ts.alfa0 - alfa1)*(ts.alfa0 - alfa1)
+      @v_na = 70.0 - 0.127*(ts.alfa0 - alfa1) - 0.0041*(ts.alfa0 - alfa1)*(ts.alfa0 - alfa1)
       @b_c = @bc/sin(@v_na*PI/180.0)
-      @c_na_otn = 0.12
-      @t_na_opt_otn = (1-@c_na_otn)*0.55*((180*@k_na/(180 - ts.alfa0 - alfa1)))**(1/3)
+      @c_na_otn = 0.2
+      #@t_na_opt_otn = (1-@c_na_otn)*0.45*((180*@k_na/(180 - ts.alfa0 - alfa1)))**(1/3)
+      @t_na_opt_otn = 0.75
       @t_na_opt = @b_c*@t_na_opt_otn
-      @dz_na_krom = 0.3*@s_c/(@t_na_opt*sin(alfa1*PI/180.0))
-      @dz_na_vtor = @dz_c_tr_prof*@t_na_opt*sin(alfa1*PI/180.0)/@l1
-      dz_na_tr_ogr_pov = @dz_na_vtor
+      @dz_na_krom = 0.2*@s_c/(@t_na_opt*sin(alfa1*PI/180.0))
+      
+      
       dz_na_prof = @dz_na_krom + @dz_c_tr_prof
+      @dz_na_vtor = dz_na_prof*@t_na_opt*sin(alfa1*PI/180.0)/@l1
+      dz_na_tr_ogr_pov = @dz_na_vtor
       dz_na_konc = @dz_na_vtor + dz_na_tr_ogr_pov
       dz_na = dz_na_prof + dz_na_konc
-      @fii = sqrt(1-dz_na**2)
+      @fii = sqrt(1-dz_na)
       ts.phi = @fii
       @m_l = @w2/sqrt(k_g*r_g*@t2)
       @k_l = sin(beta1*PI/180.0)/sin(beta2*PI/180.0)
       @dz_l_tr_prof = 0.021
-      @s_l = 0.004
-      @v_l = 85.95 - 1.277*(@beta1 - @beta2) +0.0084*(@beta1 - @beta2)*(@beta1 - @beta2)
+      @s_l = 0.003
+      @v_l = 70 - 0.127*(@beta1 - @beta2) - 0.0041*(@beta1 - @beta2)*(@beta1 - @beta2)
       @b_l = @brk/sin(@v_l*PI/180.0)
       @c_l_otn = 0.2
-      @t_l_opt_otn = (1-@c_l_otn)*0.55*((180*@k_l/(180 - @beta1 - @beta2)))**(1/3)
+      #@t_l_opt_otn = (1-@c_l_otn)*0.55*((180*@k_l/(180 - @beta1 - @beta2)))**(1/3)
+      @t_l_opt_otn = 0.7
       @t_l_opt = @b_l*@t_l_opt_otn
-      @dz_l_krom = 0.25*@s_c/(@t_na_opt*sin(@beta2*PI/180.0))
-      @dz_l_vtor = @dz_l_tr_prof*@t_l_opt*sin(@beta2*PI/180.0)/@l2
-      dz_l_tr_ogr_pov = @dz_l_vtor
+      @dz_l_krom = 0.2*@s_c/(@t_na_opt*sin(@beta2*PI/180.0))
+      
+      
       dz_l_prof = @dz_l_krom + @dz_l_tr_prof
+      @dz_l_vtor = dz_l_prof*@t_l_opt*sin(@beta2*PI/180.0)/@l2
+      dz_l_tr_ogr_pov = @dz_l_vtor
       dz_l_konc = @dz_l_vtor + dz_l_tr_ogr_pov
       dz_l = dz_l_prof + dz_l_konc
-      @psii = sqrt(1-dz_l**2)
+      @psii = sqrt(1-dz_l)
       ts.psi = @psii
       ts.cp = get_sr_cp((@t2_t+ts.t_vh_t)/2.0,ts.turbine.alpha)
       #k_g = cp_g/(cp_g - 289)
@@ -173,14 +179,18 @@ class TstageResult
     ts.p_vyh_t = @p2_t
     ts.t_vyh_t = @t2_t
     ts.save
+    if ts == stages.last
+      ts.turbine.t_vyh_t = @t2_t
+      ts.turbine.save
+    end
   end
   
   private
   def get_sr_cp(t,alfa)
-    if t < 700
-      cp = (((2.25+1.2*alfa)/(alfa*100000))*(t-70)+0.236)*4187
+    if t < 750
+      cp = (0.0174/alfa + 0.2407 +(0.0193+0.0093/alfa)*(0.001*2.5*t -0.875) + (0.002 - 0.001*1.056/(alfa - 0.2))*(2.5*0.00001*t**2 - 0.0275*t + 6.5625))*4187
     else
-      cp = (((1.25+2.2*alfa)/(alfa*100000))*(t+450)+0.218)*4187
+      cp = (0.0267/alfa + 0.26+(0.032 + 0.0133/alfa)*(0.001*1.176*t-0.88235) - (0.374*0.01 + 0.0094/(alfa**2+10))*(5.5556*0.000001*t**2 - 1.3056*0.01*t+6.67))*4187
     end
     return cp
   end
